@@ -1,0 +1,7 @@
+# Files created when creating a PyCharm project
+.idea/
+
+# pycache
+__pycache__/
+*.pyc
+*.pyo
