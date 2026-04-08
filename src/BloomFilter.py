@@ -15,6 +15,6 @@ class BloomFilter:
         """Searches the bloom filter and returns False if x is not present otherwise returns
         True if x is possibly present."""
         for hash_function in self.hash_functions:
-            if self.filter[hash_function(x) % self.m] == 0
+            if self.filter[hash_function(x) % self.m] == 0:
                 return False
         return True
