@@ -1,5 +1,5 @@
-from Code.HashingFunctions import djb2
-from Code.BloomFilter import BloomFilter
+from src.HashingFunctions import djb2
+from src.BloomFilter import BloomFilter
 
 m = 5
 small_filter = BloomFilter(m, djb2)
