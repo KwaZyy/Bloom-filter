@@ -1,26 +1,60 @@
-# Bloom-filter
+# Bloom Filter Project
 
-## Team Members
+This repository contains a small Python Bloom filter package, automated tests, and helper scripts for benchmarking and false-positive experiments.
 
-- **Arnoud Vandevelde**
-- **Atemefac Valery** 
+## Project Layout
 
-## Contents of Repository
-
+```text
+bloom-filter-project/
+|
++-- bloomfilter/
+|   +-- __init__.py
+|   +-- bloom.py
+|
++-- tests/
+|   +-- test_bloom.py
+|
++-- scripts/
+|   +-- benchmark.py
+|   +-- false_positive_experiment.py
+|
++-- hpc/
+|   +-- benchmark_job.sh
+|
++-- data/
+|   +-- words.txt
+|
++-- README.md
++-- requirements.txt
 ```
-Bloom-filter/
-├── Code/
-│   ├── BloomFilter.py
-│   └── HashingFunctions.py
-├── README.md
-└── environment.yml
+
+## Installation
+
+```bash
+pip install -r requirements.txt
 ```
 
-The code folder contains BloomFilter.py and HashingFunctions.py.
-BloomFilter.py defines the Bloom filter class.
-HashingFunctions.py defines certain hashing functions.
+## Example
 
-environment.yml denotes the python environment the software was created in.
+```python
+from bloomfilter import BloomFilter, djb2, sdbm
 
+bloom = BloomFilter(100, djb2, sdbm)
+bloom.add("apple")
 
-## Conclusion
+print(bloom.search("apple"))
+print(bloom.search("pear"))
+```
+
+## Running Tests
+
+```bash
+python -m pytest tests -p no:cacheprovider
+```
+
+## Scripts
+
+```bash
+python scripts/benchmark.py --size 10000 --repeats 5
+python scripts/false_positive_experiment.py --size 10000 --insert-count 20
+```
