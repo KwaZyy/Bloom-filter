@@ -46,6 +46,12 @@ print(bloom.search("apple"))
 print(bloom.search("pear"))
 ```
 
+## Run As A Module
+
+```bash
+python -m bloomfilter --size 100 --add apple banana --check apple pear
+```
+
 ## Running Tests
 
 ```bash
