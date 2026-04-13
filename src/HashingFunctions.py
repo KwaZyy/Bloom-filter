@@ -1,4 +1,5 @@
 def lose_lose(s: str) -> int:
+    """Implementation of loselose hash function."""
     h = 0
     for char in s:
         h += ord(char)
