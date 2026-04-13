@@ -1,3 +1,10 @@
+def lose_lose(s: str) -> int:
+    h = 0
+    for char in s:
+        h += ord(char)
+    return h
+
+
 def djb2(s: str) -> int:
     """Implementation of the djb2 hash function."""
     h = 5381
