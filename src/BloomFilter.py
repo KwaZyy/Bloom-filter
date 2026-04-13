@@ -18,3 +18,11 @@ class BloomFilter:
             if self.filter[hash_function(x) % self.m] == 0:
                 return False
         return True
+
+
+class KMBloomFilter(BloomFilter):
+    """Subclass of BloomFilter that uses the Kirsch-Mitzenmacher optimization to generate k hashing functions."""
+    def __init__(self, m: int, h1, h2, k: int) -> None:
+
+        hash_functions = [(lambda x, i=i: h1(x) + i * h2(x)) for i in range(k)]
+        super().__init__(m, *hash_functions)
