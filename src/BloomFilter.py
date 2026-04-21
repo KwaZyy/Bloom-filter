@@ -4,18 +4,18 @@ class BloomFilter:
     def __init__(self, m: int, *hash_functions) -> None:
         self.m = m
         self.hash_functions = hash_functions
-        self.filter = m*[0]
+        self.array = m*[0]
 
     def add(self, x: str) -> None:
         """Adds the given string x to the Bloom filter."""
         for hash_function in self.hash_functions:
-            self.filter[hash_function(x) % self.m] = 1
+            self.array[hash_function(x) % self.m] = 1
 
     def search(self, x: str) -> bool:
         """Searches the bloom filter and returns False if x is not present otherwise returns
         True if x is possibly present."""
         for hash_function in self.hash_functions:
-            if self.filter[hash_function(x) % self.m] == 0:
+            if self.array[hash_function(x) % self.m] == 0:
                 return False
         return True
 

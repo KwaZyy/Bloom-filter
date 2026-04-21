@@ -9,7 +9,7 @@ print(djb2("a") % m)
 print(djb2("b") % m)
 small_filter.add("a")
 small_filter.add("b")
-print(small_filter.filter)
+print(small_filter.array)
 
 
 # Searching elements
@@ -27,4 +27,4 @@ KM = KMBloomFilter(15, djb2, sdbm, 3)
 KM.add("a")
 KM.add("b")
 KM.add("c")
-print(KM.filter)
+print(KM.array)
