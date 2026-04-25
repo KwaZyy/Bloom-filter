@@ -1,9 +1,9 @@
 """Package interface for the Bloom filter project."""
-#testing 3
-#testing 3
-#testing 3
-#testing 3
-#testing 3
+#testing k
+#testing k
+#testing k
+#testing k
+#testing k
 if __package__ in (None, ""):
     from bloom import (
         DEFAULT_HASH_FUNCTIONS,
@@ -36,8 +36,6 @@ __all__ = [
 
 #online comment
 
-#testing 3
-#testing 3
-#testing 3
-#testing 3
-#testing 3
+#testing l
+#testing l
+#testing l
