@@ -52,6 +52,6 @@ def distribution(data, hash_function, m):
         function_name = "mmh3"
     else:
         function_name = hash_function.__name__
-    plot_name = f"{data_name}_{function_name}_{m}.png"
-    plt.savefig(plot_name)
+    plot_name = f"{data_name}_{function_name}_mod{m}.png"
+    plt.savefig(f"histograms/{plot_name}")
     plt.clf()
