@@ -2,6 +2,7 @@ from pathlib import Path
 from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt
+import mmh3
 
 
 def lose_lose(s: str) -> int:
@@ -28,6 +29,10 @@ def sdbm(s: str) -> int:
     return h
 
 
+def MurmurHash3(s: str, seed=815) -> int:
+    return mmh3.hash(s, seed, signed=False)
+
+
 def distribution(data, hash_function, m):
     current_dir = Path(__file__).parent
     data_path = current_dir.parent / "datasets" / data
@@ -47,11 +52,7 @@ def distribution(data, hash_function, m):
     plt.legend()
     plt.xlabel("Hash Values")
     plt.ylabel("Frequency")
-
-    if isinstance(hash_function, partial):
-        function_name = "mmh3"
-    else:
-        function_name = hash_function.__name__
+    function_name = hash_function.__name__
     plot_name = f"{data_name}_{function_name}_mod{m}.png"
     plt.savefig(f"histograms/{plot_name}")
     plt.clf()
