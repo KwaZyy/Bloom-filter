@@ -31,10 +31,12 @@ def sdbm(s: str) -> int:
 
 
 def MurmurHash3(s: str, seed=815) -> int:
+    """Implementation of the MurmurHash3 function."""
     return mmh3.hash(s, seed, signed=False)
 
 
 def distribution(data, hash_function, m):
+    """Returns a histogram of the modulo m reduced hash values of a dataset 'data'."""
     current_dir = Path(__file__).parent
     data_path = current_dir.parent / "datasets" / data
     data_name = Path(data_path).stem
@@ -63,6 +65,8 @@ def distribution(data, hash_function, m):
 
 
 def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=0):
+    """Returns a plot of a sample of modulo m reduced hash values of two hash functions for a given
+    dataset 'data'. An input seed is given for reproducibility."""
     current_dir = Path(__file__).parent
     data_path = current_dir.parent / "datasets" / data
     data_name = Path(data_path).stem
