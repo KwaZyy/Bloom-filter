@@ -60,7 +60,7 @@ def distribution(data, hash_function, m):
 
     if not os.path.exists("histograms"):
         os.mkdir("histograms")
-    plt.savefig(f"histograms/{plot_name}")
+    plt.savefig(f"histograms/{plot_name}", bbox_inches='tight')
     plt.clf()
 
 
@@ -86,10 +86,10 @@ def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=
     function2_name = hash_function2.__name__
     plt.scatter(hash_df_sample["hash1"], hash_df_sample["hash2"], alpha=0.5)
     plt.grid(True)
-    plt.ylabel(f"{function1_name} hash values")
+    plt.xlabel(f"{function1_name} hash values")
     plt.ylabel(f"{function2_name} hash values")
     plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
     if not os.path.exists("correlation plots"):
         os.mkdir("correlation plots")
-    plt.savefig(f"correlation plots/{plot_name}")
+    plt.savefig(f"correlation plots/{plot_name}", bbox_inches='tight')
     plt.clf()
