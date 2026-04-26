@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import mmh3
+import os
 
 
 def lose_lose(s: str) -> int:
@@ -54,6 +55,9 @@ def distribution(data, hash_function, m):
     plt.ylabel("Frequency")
     function_name = hash_function.__name__
     plot_name = f"{data_name}_{function_name}_mod{m}.png"
+
+    if not os.path.exists("histograms"):
+        os.mkdir("histograms")
     plt.savefig(f"histograms/{plot_name}")
     plt.clf()
 
@@ -78,5 +82,8 @@ def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=
     function1_name = hash_function1.__name__
     function2_name = hash_function2.__name__
     plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
+
+    if not os.path.exists("correlation plots"):
+        os.mkdir("correlation plots")
     plt.savefig(f"correlation plots/{plot_name}")
     plt.clf()
