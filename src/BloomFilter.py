@@ -26,5 +26,3 @@ class KMBloomFilter(BloomFilter):
 
         hash_functions = [(lambda x, i=i: h1(x) + i * h2(x)) for i in range(k)]
         super().__init__(m, *hash_functions)
-
-#testing testing
