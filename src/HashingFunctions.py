@@ -49,13 +49,13 @@ def distribution(data, hash_function, m):
 
     original = [h for h in hash_values if h < m]
     modulo_reduced = [h % m for h in hash_values if h >= m]
+    function_name = hash_function.__name__
     plt.hist([original, modulo_reduced], stacked=True,
              color=["blue", "orange"],
              label=[f"Original (<{m})", "Modulo Reduced"], edgecolor="black")
     plt.legend()
-    plt.xlabel("Hash Values")
-    plt.ylabel("Frequency")
-    function_name = hash_function.__name__
+    plt.xlabel(f"{function_name} hash values")
+    plt.ylabel("frequency")
     plot_name = f"{data_name}_{function_name}_mod{m}.png"
 
     if not os.path.exists("histograms"):
@@ -86,8 +86,8 @@ def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=
     function2_name = hash_function2.__name__
     plt.scatter(hash_df_sample["hash1"], hash_df_sample["hash2"], alpha=0.5)
     plt.grid(True)
-    plt.xlabel(function1_name)
-    plt.ylabel(function2_name)
+    plt.ylabel(f"{function1_name} hash values")
+    plt.ylabel(f"{function2_name} hash values")
     plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
     if not os.path.exists("correlation plots"):
         os.mkdir("correlation plots")
