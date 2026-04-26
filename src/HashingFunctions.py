@@ -1,7 +1,7 @@
 from pathlib import Path
-from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 import mmh3
 
 
@@ -55,4 +55,28 @@ def distribution(data, hash_function, m):
     function_name = hash_function.__name__
     plot_name = f"{data_name}_{function_name}_mod{m}.png"
     plt.savefig(f"histograms/{plot_name}")
+    plt.clf()
+
+
+def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=0):
+    current_dir = Path(__file__).parent
+    data_path = current_dir.parent / "datasets" / data
+    data_name = Path(data_path).stem
+    with open(data_path, 'r') as file:
+        data_list = file.read().splitlines()
+
+    hash1_values = np.array([hash_function1(string) for string in data_list])
+    hash1_values = [h % m for h in hash1_values]
+
+    hash2_values = np.array([hash_function2(string) for string in data_list])
+    hash2_values = [h % m for h in hash2_values]
+
+    hash_df = pd.DataFrame({"hash1": hash1_values, "hash2": hash2_values})
+    hash_df_sample = hash_df.sample(n=sample, random_state=seed)
+    plt.scatter(hash_df_sample["hash1"], hash_df_sample["hash2"], alpha=0.5)
+    plt.grid(True)
+    function1_name = hash_function1.__name__
+    function2_name = hash_function2.__name__
+    plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
+    plt.savefig(f"correlation plots/{plot_name}")
     plt.clf()
