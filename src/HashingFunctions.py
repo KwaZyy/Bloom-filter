@@ -81,12 +81,14 @@ def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=
 
     hash_df = pd.DataFrame({"hash1": hash1_values, "hash2": hash2_values})
     hash_df_sample = hash_df.sample(n=sample, random_state=seed)
-    plt.scatter(hash_df_sample["hash1"], hash_df_sample["hash2"], alpha=0.5)
-    plt.grid(True)
+
     function1_name = hash_function1.__name__
     function2_name = hash_function2.__name__
+    plt.scatter(hash_df_sample["hash1"], hash_df_sample["hash2"], alpha=0.5)
+    plt.grid(True)
+    plt.xlabel(function1_name)
+    plt.ylabel(function2_name)
     plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
-
     if not os.path.exists("correlation plots"):
         os.mkdir("correlation plots")
     plt.savefig(f"correlation plots/{plot_name}")
