@@ -1,3 +1,6 @@
+import copy
+
+
 class BloomFilter:
     """BloomFilter represents a Bloom filter object of length m and using the given hash functions."""
     
@@ -26,3 +29,18 @@ class KMBloomFilter(BloomFilter):
 
         hash_functions = [(lambda x, i=i: h1(x) + i * h2(x)) for i in range(k)]
         super().__init__(m, *hash_functions)
+
+
+def false_positive_rate(empty_filter, total_strings, inserted_strings):
+    """For a given empty Bloom filter inserts a series of strings and returns the approximate false error rate for the
+     filled filter. The false positive rate is the probability that one of the strings in total_strings, which is not
+     in inserted_strings, results in a True when searching."""
+    filter = copy.deepcopy(empty_filter)
+    for string in inserted_strings:
+        filter.add(string)
+    false_positive_list = (len(total_strings) - len(inserted_strings)) * [0]
+    for j, word in enumerate(list(set(total_strings) - set(inserted_strings))):
+        if filter.search(word):
+            false_positive_list[j] = 1
+    false_positive_rate = sum(false_positive_list) / len(false_positive_list)
+    return false_positive_rate
