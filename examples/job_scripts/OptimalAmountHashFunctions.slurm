@@ -5,5 +5,6 @@
 module load Miniforge3/25.3.0-3
 source $(conda info --base)/etc/profile.d/conda.sh
 conda activate bloom_filter_python
+cd $SLURM_SUBMIT_DIR/..
 export PYTHONPATH=$PYTHONPATH:$(pwd)/..
 python OptimalAmountHashFunctions.py
