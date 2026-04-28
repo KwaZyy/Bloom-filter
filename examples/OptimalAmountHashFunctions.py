@@ -1,74 +1,55 @@
 import numpy as np
-
 from src.BloomFilter import KMBloomFilter, false_positive_rate
-from src.HashingFunctions import sdbm, MurmurHash3
+from src.HashingFunctions import lose_lose, djb2, sdbm, MurmurHash3
 import random
 from pathlib import Path
 import math
 import matplotlib.pyplot as plt
+import os
 
 
-current_dir = Path(__file__).parent
+def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, seed=0):
+    """Returns a plot showing how the error rate changes as the amount of hash functions increase.
+    'dataset' denotes which bloom filter of size m we create and for which n random strings of the dataset are inserted.
+    The extra hash functions are generated using the Kirsch-Mitzenmatcher optimization for two given hash functions."""
 
-words_path = current_dir.parent / "datasets" / "words.txt"
-with open(words_path, 'r') as file:
-    words = file.read().splitlines()
+    # Accessing datasets
+    current_dir = Path(__file__).parent
+    data_path = current_dir.parent / "datasets" / dataset
+    data_name = Path(data_path).stem
 
-DNA_path = current_dir.parent / "datasets" / "DNA.txt"
-with open(DNA_path, 'r') as file:
-    DNA = file.read().splitlines()
+    with open(data_path, 'r') as file:
+        data_list = file.read().splitlines()
+
+    # Creating random subset of data
+    random.seed(seed)
+    randomized_data = data_list.copy()
+    random.shuffle(randomized_data)
+    subset_data = randomized_data[:n]
+    data_error_rates = max_k * [0]
+
+    # Constructing theoretical error rate
+    x = np.linspace(1, max_k, 1000)
+    y = (1 - np.exp(-x * n / m)) ** x
+
+    # Constructing error rates for each k-value
+    for k in range(1, max_k + 1):
+        data_error_rates[k - 1] = false_positive_rate(KMBloomFilter(m, h1, h2, k), data_list, subset_data)
+    optimal_k = m / n * math.log(2)
+
+    # Plotting and saving the graph
+    plt.plot(list(range(1, max_k + 1)), data_error_rates, label="Actual error rate")
+    plt.plot(x, y, label="Theoretical error rate")
+    plt.xlabel("Amount of hash functions")
+    plt.ylabel("False positive rate")
+    plt.axvline(x=optimal_k, color="r", label="Theoretical minimum", linestyle="dashed")
+    plt.legend()
+    plt.grid(True)
+    if not os.path.exists("false_positive _rate_plots"):
+        os.mkdir("false_positive_rate_plots")
+    plt.savefig(f"false_positive_rate_plots/OptimalAmountHashFunctions_{data_name}")
+    plt.clf()
 
 
-random.seed(0)  # For reproducibility
-randomized_words = words.copy()
-random.shuffle(randomized_words)
-randomized_DNA = DNA.copy()
-random.shuffle(randomized_DNA)
-
-n1 = 30000
-m1 = 300000
-subset_words = randomized_words[:n1]
-
-max_k1 = 20
-words_error_rates = max_k1 * [0]
-x1 = np.linspace(1, max_k1, 1000)
-y1 = (1-np.exp(-x1*n1/m1))**x1
-
-for k in range(1, max_k1+1):
-    words_error_rates[k-1] = false_positive_rate(KMBloomFilter(m1, sdbm, MurmurHash3, k), words, subset_words)
-
-optimal_k_words = m1/n1 * math.log(2)
-
-plt.plot(list(range(1, max_k1+1)), words_error_rates, label="Actual error rate")
-plt.plot(x1, y1, label="Theoretical error rate")
-plt.xlabel("Amount of hash functions")
-plt.ylabel("False positive rate")
-plt.axvline(x=optimal_k_words, color="r", label="Theoretical minimum", linestyle="dashed")
-plt.legend()
-plt.grid(True)
-plt.savefig("OptimalAmountHashFunctions_words")
-plt.clf()
-
-n2 = 200000
-m2 = 1000000
-subset_DNA = randomized_DNA[:n2]
-
-max_k2 = 10
-DNA_error_rates = max_k2 * [0]
-x2 = np.linspace(1, max_k2, 1000)
-y2 = (1-np.exp(-x2*n2/m2))**x2
-
-for k in range(1, max_k2+1):
-    DNA_error_rates[k-1] = false_positive_rate(KMBloomFilter(m2, sdbm, MurmurHash3, k), DNA, subset_DNA)
-
-optimal_k_DNA = m2/n2 * math.log(2)
-
-plt.plot(list(range(1, max_k2+1)), DNA_error_rates, label="Actual error rate")
-plt.plot(x2, y2, label="Theoretical error rate")
-plt.xlabel("Amount of hash functions")
-plt.ylabel("False positive rate")
-plt.axvline(x=optimal_k_DNA, color="r", label="Theoretical minimum", linestyle="dashed")
-plt.legend()
-plt.grid(True)
-plt.savefig("OptimalAmountHashFunctions_DNA")
-plt.clf()
+error_against_amount_hash("words.txt", 30000, 300000, 20)
+error_against_amount_hash("DNA.txt", 200000, 1000000, 10)
