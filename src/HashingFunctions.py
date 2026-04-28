@@ -89,7 +89,7 @@ def correlation_plot(data, hash_function1, hash_function2, m, sample=1000, seed=
     plt.xlabel(f"{function1_name} hash values")
     plt.ylabel(f"{function2_name} hash values")
     plot_name = f"{data_name}_sample{sample}_{function1_name}_{function2_name}_mod{m}.png"
-    if not os.path.exists("correlation plots"):
-        os.mkdir("correlation plots")
-    plt.savefig(f"correlation plots/{plot_name}", bbox_inches='tight')
+    if not os.path.exists("correlation_plots"):
+        os.mkdir("correlation_plots")
+    plt.savefig(f"correlation_plots/{plot_name}", bbox_inches='tight')
     plt.clf()
