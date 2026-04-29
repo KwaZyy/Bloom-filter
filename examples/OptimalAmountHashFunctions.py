@@ -26,20 +26,20 @@ def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, see
     randomized_data = data_list.copy()
     random.shuffle(randomized_data)
     subset_data = randomized_data[:n]
-    data_error_rates = max_k * [0]
+    empirical_error_rate = max_k * [0]
 
     # Constructing theoretical error rate
     x = np.linspace(1, max_k, 1000)
-    y = (1 - np.exp(-x * n / m)) ** x
+    theoretical_error_rate = (1 - np.exp(-x * n / m)) ** x
 
-    # Constructing error rates for each k-value
+    # Constructing empirical error rates for each k-value
     for k in range(1, max_k + 1):
-        data_error_rates[k - 1] = false_positive_rate(KMBloomFilter(m, h1, h2, k), data_list, subset_data)
+        empirical_error_rate[k-1] = false_positive_rate(KMBloomFilter(m, h1, h2, k), data_list, subset_data)
     optimal_k = m / n * math.log(2)
 
     # Plotting and saving the graph
-    plt.plot(list(range(1, max_k + 1)), data_error_rates, label="Actual error rate")
-    plt.plot(x, y, label="Theoretical error rate")
+    plt.plot(list(range(1, max_k + 1)), empirical_error_rate, label="Empirical  error rate")
+    plt.plot(x, theoretical_error_rate, label="Theoretical error rate")
     plt.xlabel("Amount of hash functions")
     plt.ylabel("False positive rate")
     plt.axvline(x=optimal_k, color="r", label="Theoretical minimum", linestyle="dashed")
