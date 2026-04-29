@@ -9,10 +9,15 @@ class BloomFilter:
         self.hash_functions = hash_functions
         self.array = m*[0]
 
-    def add(self, x: str) -> None:
-        """Adds the given string x to the Bloom filter."""
-        for hash_function in self.hash_functions:
-            self.array[hash_function(x) % self.m] = 1
+    def add(self, x) -> None:
+        """Adds the given string or list of strings to the Bloom filter."""
+        # Checks if x is a list or a singular string
+        items = [x] if isinstance(x, str) else x
+
+        for item in items:
+            for hash_function in self.hash_functions:
+                index = hash_function(item) % self.m
+                self.array[index] = 1
 
     def search(self, x: str) -> bool:
         """Searches the bloom filter and returns False if x is not present otherwise returns
@@ -36,8 +41,7 @@ def false_positive_rate(empty_filter, total_strings, inserted_strings):
      filled filter. The false positive rate is the probability that one of the strings in total_strings, which is not
      in inserted_strings, results in a True when searching."""
     filter = copy.deepcopy(empty_filter)
-    for string in inserted_strings:
-        filter.add(string)
+    filter.add(inserted_strings)
     false_positive_list = (len(total_strings) - len(inserted_strings)) * [0]
     for j, word in enumerate(list(set(total_strings) - set(inserted_strings))):
         if filter.search(word):
