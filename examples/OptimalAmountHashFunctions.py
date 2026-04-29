@@ -45,7 +45,7 @@ def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, see
     plt.axvline(x=optimal_k, color="r", label="Theoretical minimum", linestyle="dashed")
     plt.legend()
     plt.grid(True)
-    if not os.path.exists("false_positive _rate_plots"):
+    if not os.path.exists("false_positive_rate_plots"):
         os.mkdir("false_positive_rate_plots")
     plt.savefig(f"false_positive_rate_plots/OptimalAmountHashFunctions_{data_name}")
     plt.clf()
