@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import os
 
 
-def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, seed=0):
-    """Returns a plot showing how the error rate changes as the amount of hash functions increase.
+def false_positive_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, seed=0):
+    """Returns a plot showing how the false positive rate changes as the amount of hash functions increase.
     'dataset' denotes which bloom filter of size m we create and for which n random strings of the dataset are inserted.
     The extra hash functions are generated using the Kirsch-Mitzenmatcher optimization for two given hash functions."""
 
@@ -26,20 +26,20 @@ def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, see
     randomized_data = data_list.copy()
     random.shuffle(randomized_data)
     subset_data = randomized_data[:n]
-    empirical_error_rate = max_k * [0]
+    empirical_false_positive_rate = max_k * [0]
 
-    # Constructing theoretical error rate
+    # Calculating theoretical false positive rates
     x = np.linspace(1, max_k, 1000)
-    theoretical_error_rate = (1 - np.exp(-x * n / m)) ** x
+    theoretical_false_positive_rate = (1 - np.exp(-x * n / m)) ** x
 
-    # Constructing empirical error rates for each k-value
+    # Calculating empirical false positive rates for each k-value
     for k in range(1, max_k + 1):
-        empirical_error_rate[k-1] = false_positive_rate(KMBloomFilter(m, h1, h2, k), data_list, subset_data)
+        empirical_false_positive_rate[k-1] = false_positive_rate(KMBloomFilter(m, h1, h2, k), data_list, subset_data)
     optimal_k = m / n * math.log(2)
 
     # Plotting and saving the graph
-    plt.plot(list(range(1, max_k + 1)), empirical_error_rate, label="Empirical  error rate")
-    plt.plot(x, theoretical_error_rate, label="Theoretical error rate")
+    plt.plot(list(range(1, max_k + 1)), empirical_false_positive_rate, label="Empirical false positive rate")
+    plt.plot(x, theoretical_false_positive_rate, label="Theoretical false positive rate")
     plt.xlabel("Amount of hash functions")
     plt.ylabel("False positive rate")
     plt.axvline(x=optimal_k, color="r", label="Theoretical minimum", linestyle="dashed")
@@ -51,5 +51,5 @@ def error_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, see
     plt.clf()
 
 
-error_against_amount_hash("words.txt", 30000, 300000, 20)
-error_against_amount_hash("DNA.txt", 200000, 1000000, 10)
+false_positive_against_amount_hash("words.txt", 30000, 300000, 20)
+false_positive_against_amount_hash("DNA.txt", 200000, 1000000, 10)
