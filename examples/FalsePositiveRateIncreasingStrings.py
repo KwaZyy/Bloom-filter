@@ -48,3 +48,7 @@ def false_positive_against_inserted_strings(dataset, empty_filter, samples=200, 
         os.mkdir("false_positive_rate_plots")
     plt.savefig(f"false_positive_rate_plots/FalsePositiveRateIncreasingStrings_{data_name}")
     plt.clf()
+
+
+false_positive_against_inserted_strings("words.txt", KMBloomFilter(200000, sdbm, MurmurHash3, 3), 200)
+false_positive_against_inserted_strings("DNA.txt", KMBloomFilter(800000, sdbm, MurmurHash3, 5), 200)
