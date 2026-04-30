@@ -2,7 +2,8 @@ import copy
 import time
 from pathlib import Path
 import numpy as np
-
+import matplotlib.pyplot as plt
+import os
 
 class BloomFilter:
     """BloomFilter represents a Bloom filter object of length m and using the given hash functions."""
@@ -87,3 +88,68 @@ def time_search_add(dataset, empty_filter: BloomFilter):
     cumulative_time_per_search = np.cumsum(time_per_search)
     cumulative_time_per_add = np.cumsum(time_per_add)
     return (time_per_search, time_per_add), (cumulative_time_per_search, cumulative_time_per_add)
+
+
+def plot_time_search_add(dataset, empty_filter: BloomFilter):
+    """For a given empty Bloom filter and dataset returns box plots of the difference between adding and searching for
+    the filter with and without outliers, box plots of searching and adding, and a line plot of the cumulative time
+    for adding and searching."""
+    # Time per search and add
+    time_list = time_search_add(dataset, empty_filter)
+
+    time_per_search = time_list[0][0]
+    time_per_add = time_list[0][1]
+
+    cumulative_time_per_search = time_list[1][0]
+    cumulative_time_per_add = time_list[1][1]
+
+    # Amount of total strings
+    n = len(time_list[0][0])
+    n_values = list(range(1, n+1))
+
+    # String name of the dataset for saving plots
+    data_name = Path(dataset).stem
+
+    # Box plot of difference between adding and searching
+    plt.boxplot(np.array(time_per_add) - np.array(time_per_search),tick_labels=["add time - search time"],
+                patch_artist=True)
+    plt.ylabel("Time (seconds)")
+    plt.axhline(0, color='red', linestyle='--', alpha=0.6, label='Zero Difference')
+    plt.grid(True, which="both", ls="-", alpha=0.2)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/diff_add_search_{data_name}")
+    plt.clf()
+
+    # Box plot of difference between adding and searching with no outliers
+    plt.boxplot(np.array(time_per_add) - np.array(time_per_search), tick_labels=["add time - search time"],
+                patch_artist=True, showfliers=False)
+    plt.ylabel("Time (seconds)")
+    plt.axhline(0, color='red', linestyle='--', alpha=0.6, label='Zero Difference')
+    plt.grid(True, which="both", ls="-", alpha=0.2)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/diff_add_search_no_outliers_{data_name}")
+    plt.clf()
+
+    # Box plots of searching and adding
+    plt.boxplot([time_per_search, time_per_add], tick_labels=["Search", "Add"], patch_artist=True)
+    plt.yscale("log")
+    plt.ylabel("Time (seconds) in log scale")
+    plt.grid(True, which="both", ls="-", alpha=0.2)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/add_search_{data_name}")
+    plt.clf()
+
+    # Line plot of cumulative time needed for searching and adding the entire dataset
+    plt.plot(n_values, cumulative_time_per_search, label="Search")
+    plt.plot(n_values, cumulative_time_per_add, label="Add")
+    plt.xlabel("Amount of tested/inserted strings")
+    plt.ylabel("Time (seconds)")
+    plt.legend()
+    plt.grid(True)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/cumulative_add_search_{data_name}")
+    plt.clf()
