@@ -1,4 +1,7 @@
 import copy
+import time
+from pathlib import Path
+import numpy as np
 
 
 class BloomFilter:
@@ -48,3 +51,39 @@ def false_positive_rate(empty_filter, total_strings, inserted_strings):
             false_positive_list[j] = 1
     false_positive_rate = sum(false_positive_list) / len(false_positive_list)
     return false_positive_rate
+
+
+def time_search_add(dataset, empty_filter: BloomFilter):
+    """For a given dataset and empty bloom filter returns a tuple containing four lists, which contain the time needed
+    for each search and addition and the amount of cumulative time needed for these operations. The searching is done
+    for a Bloom filter in which we include the previous elements, this highlights how the amount of time changes as the
+    amount of elements in a filter increase."""
+
+    # Copy empty filter
+    filter = copy.deepcopy(empty_filter)
+
+    # Accessing dataset
+    current_dir = Path(__file__).parent
+    data_path = current_dir.parent / "datasets" / dataset
+
+    with open(data_path, 'r') as file:
+        data_list = file.read().splitlines()
+
+    # Calculating time per search and add
+    time_per_search = []
+    time_per_add = []
+    for string in data_list:
+        start = time.perf_counter()
+        filter.search(string)
+        end = time.perf_counter()
+        time_per_search.append(end - start)
+
+        start = time.perf_counter()
+        filter.add(string)
+        end = time.perf_counter()
+        time_per_add.append(end - start)
+
+    # Calculating cumulative time per search and add
+    cumulative_time_per_search = np.cumsum(time_per_search)
+    cumulative_time_per_add = np.cumsum(time_per_add)
+    return (time_per_search, time_per_add), (cumulative_time_per_search, cumulative_time_per_add)
