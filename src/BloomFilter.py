@@ -185,3 +185,38 @@ def plot_cumulative_time_per_hash(dataset, m, h1, h2, max_k):
         os.mkdir("time_plots")
     plt.savefig(f"time_plots/cumulative_add_search_per_hash_{data_name}")
     plt.clf()
+
+
+def plot_time_length_string(filter: BloomFilter, plot_name: str, max_length=None):
+    """Returns a line plot of the amount time needed to search and add strings of increasing length of the form a, aa,
+     aaa, etc."""
+    # If max length is not specified choose size of Bloom filter
+    if max_length is None:
+        max_length = filter.m
+
+    # Calculates time per search and add for increasing strings of the form a, aa, aaa, etc...
+    time_per_search = []
+    time_per_add = []
+    for i in range(1, max_length + 1):
+        string = "a" * i
+        start = time.perf_counter()
+        filter.search(string)
+        end = time.perf_counter()
+        time_per_search.append(end - start)
+
+        start = time.perf_counter()
+        filter.add(string)
+        end = time.perf_counter()
+        time_per_add.append(end - start)
+
+    # Line plot of time needed for searching and adding for a string of increasing size
+    plt.plot(list(range(1, max_length + 1)), time_per_search, label="Search")
+    plt.plot(list(range(1, max_length + 1)), time_per_add, label="Add")
+    plt.xlabel("Length of string")
+    plt.ylabel("Time (seconds)")
+    plt.legend()
+    plt.grid(True)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/time_length_string_{plot_name}")
+    plt.clf()
