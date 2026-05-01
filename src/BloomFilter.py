@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+
 class BloomFilter:
     """BloomFilter represents a Bloom filter object of length m and using the given hash functions."""
     
@@ -111,7 +112,7 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     data_name = Path(dataset).stem
 
     # Box plot of difference between adding and searching
-    plt.boxplot(np.array(time_per_add) - np.array(time_per_search),tick_labels=["add time - search time"],
+    plt.boxplot(np.array(time_per_add) - np.array(time_per_search), tick_labels=["add time - search time"],
                 patch_artist=True)
     plt.ylabel("Time (seconds)")
     plt.axhline(0, color='red', linestyle='--', alpha=0.6, label='Zero Difference')
@@ -152,4 +153,35 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
     plt.savefig(f"time_plots/cumulative_add_search_{data_name}")
+    plt.clf()
+
+
+def plot_cumulative_time_per_hash(dataset, m, h1, h2, max_k):
+    """Returns a line plot showing how the amount of cumulative time needed for searching and adding all elements into
+    a Bloom filter changes as the amount of hash functions of the filter increase."""
+
+    # String name of the dataset for saving plots
+    data_name = Path(dataset).stem
+
+    # Initialization of cumulative time vectors per hash function
+    cumulative_search_per_k = []
+    cumulative_add_per_k = []
+
+    # Calculating total time needed for searching and adding for an increasing amount of hash functions
+    for k in range(1, max_k + 1):
+        filter = KMBloomFilter(m, h1, h2, k)
+        time_list = time_search_add(dataset, filter)
+        cumulative_search_per_k.append(time_list[1][0][-1])
+        cumulative_add_per_k.append(time_list[1][1][-1])
+
+    # Line plot of cumulative time needed for searching and adding for an increasing amount of hash functions
+    plt.plot(list(range(1, max_k + 1)), cumulative_search_per_k, label="Search")
+    plt.plot(list(range(1, max_k + 1)), cumulative_add_per_k, label="Add")
+    plt.xlabel("Amount of hash functions")
+    plt.ylabel("Time (seconds)")
+    plt.legend()
+    plt.grid(True)
+    if not os.path.exists("time_plots"):
+        os.mkdir("time_plots")
+    plt.savefig(f"time_plots/cumulative_add_search_per_hash_{data_name}")
     plt.clf()
