@@ -87,7 +87,7 @@ def time_search_add(dataset, empty_filter: BloomFilter):
     # Calculating cumulative time per search and add
     cumulative_time_per_search = np.cumsum(time_per_search)
     cumulative_time_per_add = np.cumsum(time_per_add)
-    return (time_per_search, time_per_add), (cumulative_time_per_search, cumulative_time_per_add)
+    return (np.array(time_per_search), np.array(time_per_add)), (cumulative_time_per_search, cumulative_time_per_add)
 
 
 def plot_time_search_add(dataset, empty_filter: BloomFilter):
