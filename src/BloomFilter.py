@@ -119,7 +119,7 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     plt.grid(True, which="both", ls="-", alpha=0.2)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/diff_add_search_{data_name}")
+    plt.savefig(f"time_plots/diff_add_search_{data_name}", bbox_inches="tight")
     plt.clf()
 
     # Box plot of difference between adding and searching with no outliers
@@ -130,7 +130,7 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     plt.grid(True, which="both", ls="-", alpha=0.2)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/diff_add_search_no_outliers_{data_name}")
+    plt.savefig(f"time_plots/diff_add_search_no_outliers_{data_name}", bbox_inches="tight")
     plt.clf()
 
     # Box plots of searching and adding
@@ -140,7 +140,7 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     plt.grid(True, which="both", ls="-", alpha=0.2)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/add_search_{data_name}")
+    plt.savefig(f"time_plots/add_search_{data_name}", bbox_inches="tight")
     plt.clf()
 
     # Line plot of cumulative time needed for searching and adding the entire dataset
@@ -152,7 +152,7 @@ def plot_time_search_add(dataset, empty_filter: BloomFilter):
     plt.grid(True)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/cumulative_add_search_{data_name}")
+    plt.savefig(f"time_plots/cumulative_add_search_{data_name}", bbox_inches="tight")
     plt.clf()
 
 
@@ -183,7 +183,7 @@ def plot_cumulative_time_per_hash(dataset, m, h1, h2, max_k):
     plt.grid(True)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/cumulative_add_search_per_hash_{data_name}")
+    plt.savefig(f"time_plots/cumulative_add_search_per_hash_{data_name}", bbox_inches="tight")
     plt.clf()
 
 
@@ -218,5 +218,5 @@ def plot_time_length_string(filter: BloomFilter, plot_name: str, max_length=None
     plt.grid(True)
     if not os.path.exists("time_plots"):
         os.mkdir("time_plots")
-    plt.savefig(f"time_plots/time_length_string_{plot_name}")
+    plt.savefig(f"time_plots/time_length_string_{plot_name}", bbox_inches="tight")
     plt.clf()
