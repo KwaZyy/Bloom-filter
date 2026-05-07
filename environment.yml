@@ -1,0 +1,22 @@
+name: bloom_filter_python
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # Core Python
+  - python=3.14
+  - pip
+  
+  # Data & Math (HPC optimized via conda-forge)
+  - numpy
+  - pandas
+  - matplotlib
+  - pillow
+  
+  # System/Performance
+  - libgcc-ng  # Linux standard for C++ support
+  - openssl
+  
+  # Pip-specific dependencies
+  - pip:
+      - mmh3==5.2.1
