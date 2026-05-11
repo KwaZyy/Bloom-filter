@@ -7,18 +7,34 @@
 
 ## Contents of Repository
 
-```
+```text
 Bloom-filter/
-├── Code/
+├── datasets/
+│   ├── DNA.py
+│   ├── DNA.txt
+│   └── words.txt
+├── examples/
+│   ├── correlation_plots/
+│   ├── false_positive_rate_plots/
+│   ├── histograms/
+│   ├── job_scripts/
+│   ├── time_plots/
+│   ├── adding_and_searching.py
+│   ├── correlation_HashFunctions.py
+│   ├── FalsePositiveRateIncreasingStrings.py
+│   ├── histogram_HashFunctions.py
+│   ├── OptimalAmountHashFunctions.py
+│   └── TimeAddingSearching.py
+├── scripts/
+├── src/
+│   ├── __init__.py
 │   ├── BloomFilter.py
 │   └── HashingFunctions.py
-├── README.md
-└── environment.yml
+├── tests/
+├── .gitignore
+├── environment.yml
+└── README.md
 ```
-
-The code folder contains BloomFilter.py and HashingFunctions.py.
-BloomFilter.py defines the Bloom filter class.
-HashingFunctions.py defines certain hashing functions.
 
 environment.yml denotes the python environment the software was created in.
 
