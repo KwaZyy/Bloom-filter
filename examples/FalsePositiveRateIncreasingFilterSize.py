@@ -66,7 +66,8 @@ def false_positive_against_filter_size(
     m_values_array = np.array(m_values)
 
     # Calculate theoretical false positive rates
-    theoretical_false_positive_rate = (1 - np.exp(-k * n / m_values_array)) ** k
+    x = np.linspace(min_m, max_m, 25*samples)
+    theoretical_false_positive_rate = (1 - np.exp(-k * n / x)) ** k
 
     # Calculate empirical false positive rates
     empirical_false_positive_rate = []
@@ -78,7 +79,7 @@ def false_positive_against_filter_size(
 
     # Plotting and saving the graph
     plt.plot(m_values_array, empirical_false_positive_rate, label="Empirical false positive rate")
-    plt.plot(m_values_array, theoretical_false_positive_rate, label="Theoretical false positive rate")
+    plt.plot(x, theoretical_false_positive_rate, label="Theoretical false positive rate")
     plt.xlabel("Bloom filter size m")
     plt.ylabel("False positive rate")
     plt.legend()
