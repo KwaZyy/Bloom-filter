@@ -2,7 +2,7 @@
 
 ## Team Members
 
-- **Arnoud Vandevelde**
+- **Arnoud Vandevelde (KwaZyy)**
 - **Atemefac Valery** 
 
 ## Contents of Repository
