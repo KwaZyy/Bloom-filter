@@ -5,3 +5,5 @@
 __pycache__/
 *.pyc
 *.pyo
+# Temporary zip files created for sharing/uploading
+*.zip
