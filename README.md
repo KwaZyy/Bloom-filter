@@ -19,10 +19,10 @@ Bloom-filter/
 │   ├── histograms/
 │   ├── job_scripts/
 │   ├── time_plots/
-│   ├── adding_and_searching.py
-│   ├── correlation_HashFunctions.py
+│   ├── AddingAndSearching.py
+│   ├── CorrelationHashFunctions.py
 │   ├── FalsePositiveRateIncreasingStrings.py
-│   ├── histogram_HashFunctions.py
+│   ├── HistogramHashFunctions.py
 │   ├── OptimalAmountHashFunctions.py
 │   └── TimeAddingSearching.py
 │   ├── Correctness.py
@@ -63,8 +63,8 @@ This folder contains example scripts that demonstrate and test different parts o
 - `FalsePositiveRateIncreasingFilterSize.py`: studies how the false positive rate changes when the Bloom filter size increases.
 - `OptimalAmountHashFunctions.py`: studies how the number of hash functions affects the false positive rate.
 - `TimeAddingSearching.py`: compares the time needed for adding and searching strings.
-- `correlation_HashFunctions.py`: studies the relationship between pairs of hash functions.
-- `histogram_HashFunctions.py`: creates histograms showing the distribution of hash values.
+- `CorrelationHashFunctions.py`: studies the relationship between pairs of hash functions.
+- `HistogramHashFunctions.py`: creates histograms showing the distribution of hash values.
 
 ### `examples/false_positive_rate_plots/`
 
