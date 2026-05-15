@@ -26,7 +26,6 @@ Bloom-filter/
 │   ├── OptimalAmountHashFunctions.py
 │   └── TimeAddingSearching.py
 │   ├── Correctness.py
-├── scripts/
 ├── src/
 │   ├── __init__.py
 │   ├── BloomFilter.py
