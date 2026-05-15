@@ -29,6 +29,7 @@ Bloom-filter/
 ├── src/
 │   ├── __init__.py
 │   ├── BloomFilter.py
+│   ├── BloomFilterPlots.py
 │   └── HashingFunctions.py
 ├── tests/
 ├── .gitignore
@@ -49,7 +50,8 @@ This folder contains the input datasets used in the examples.
 
 This folder contains the main implementation of the Bloom filter.
 
-- `BloomFilter.py`: contains the Bloom filter classes and related functions, including adding strings, searching strings, timing operations, and calculating false positive rates.
+- `BloomFilter.py`: contains the core Bloom filter classes and the false positive rate calculation.
+  `BloomFilterPlots.py`: contains helper functions for timing plots, false positive rate plots, and experiment visualisations.
 - `HashingFunctions.py`: contains the hash functions used by the Bloom filter, such as `sdbm`, `djb2`, `lose_lose`, and `MurmurHash3`.
 
 ### `examples/`
