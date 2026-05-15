@@ -145,3 +145,7 @@ Some scripts create plots. These plots are saved in folders such as:
 ## Job Scripts
 
 The `examples/job_scripts/` folder contains job scripts which were used via VSC (Vlaams Supercomputer Centrum) to run certain python scripts which were time intensive.
+
+## Conclusions
+
+To conclude we showed that the djb2, sdbm and MurmurHash3 functions produce appropiate and uniform values after being modulo reduced by the Bloom filter size m, indicating that these hash functions are suitable for use in Bloom filters. These functions were also tested for correlation, for which there was no indication. Regarding time complexity, under fixed strings, we empirically checked that it was of the form O(k). For increasing string sizes we found a non-linear effect diverging from the theoretical O(l) time complexity. Space complexity is only dependent on the Bloom filter size m and thus was of the form O(m). For Bloom filter we have a theoretical false positive rate given by:  $\varepsilon \approx (1 - e^{\frac{-kn}{m}})^k$, this result was compared to an empirical false positive rate for varying n,m and k values which largely agreed with the theoretical result. For an increasing amount of strings the 'add' and 'search' functions were tested, showing a linear O(n) effect. For 'adding' we also saw an increase of time needed as compared against 'searching', which was to be expected because the searching procedure can stop before iterating over all of the hash  functions. 
