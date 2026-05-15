@@ -48,5 +48,3 @@ def false_positive_rate(empty_filter, total_strings, inserted_strings):
             false_positive_list[j] = 1
     false_positive_rate = sum(false_positive_list) / len(false_positive_list)
     return false_positive_rate
-
-
