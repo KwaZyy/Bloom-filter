@@ -265,30 +265,33 @@ def false_positive_against_filter_size(
 
 def false_positive_against_inserted_strings(dataset, empty_filter, samples=200, seed=0):
     """Plots the false positive rate against the amount of inserted strings when inserting into an empty Bloom filter.
+
     The graph is plotted over an equidistant amount, given by samples, of points from 0 to the length of the dataset
-    (excluding that last point, because there are no more possible inserted strings). The given seed denotes how the
-    data is randomized, to possibly remove any ordering when adding strings."""
-    # Accessing datasets
+    excluding the last point, because there are no more possible inserted strings. The given seed denotes how the
+    data is randomized, to possibly remove any ordering when adding strings.
+    """
+    # Accessing dataset
     current_dir = Path(__file__).parent
     data_path = current_dir.parent / "datasets" / dataset
     data_name = Path(data_path).stem
 
-    with open(data_path, 'r') as file:
+    with open(data_path, "r") as file:
         data_list = file.read().splitlines()
 
     # Randomizing data
     random.seed(seed)
     randomized_data = data_list.copy()
+    random.shuffle(randomized_data)
 
     # Calculating theoretical false positive rates
     m = empty_filter.m
     k = len(empty_filter.hash_functions)
-    n_values = np.linspace(1, len(data_list), samples+1).round().astype(int)
+    n_values = np.linspace(1, len(data_list), samples + 1).round().astype(int)
     n_values = n_values[:-1]
     theoretical_false_positive_rate = (1 - np.exp(-k * n_values / m)) ** k
 
     # Calculating empirical error rates
-    empirical_false_positive_rate = len(n_values) * [0]
+    empirical_false_positive_rate = [0.0] * len(n_values)
     for i, n in enumerate(n_values):
         empirical_false_positive_rate[i] = false_positive_rate(empty_filter, randomized_data, randomized_data[:n])
 
@@ -304,7 +307,6 @@ def false_positive_against_inserted_strings(dataset, empty_filter, samples=200, 
         os.mkdir("false_positive_rate_plots")
     plt.savefig(f"false_positive_rate_plots/FalsePositiveRateIncreasingStrings_{data_name}")
     plt.clf()
-
 def false_positive_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, seed=0):
     """Returns a plot showing how the false positive rate changes as the amount of hash functions increase.
     'dataset' denotes which bloom filter of size m we create and for which n random strings of the dataset are inserted.
@@ -323,7 +325,7 @@ def false_positive_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurH
     randomized_data = data_list.copy()
     random.shuffle(randomized_data)
     subset_data = randomized_data[:n]
-    empirical_false_positive_rate = max_k * [0]
+    empirical_false_positive_rate = [0.0] * max_k
 
     # Calculating theoretical false positive rates
     x = np.linspace(1, max_k, 1000)
