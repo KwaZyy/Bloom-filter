@@ -10,6 +10,7 @@ import math
 from src.BloomFilter import BloomFilter, KMBloomFilter, false_positive_rate
 from src.HashingFunctions import sdbm, MurmurHash3
 
+
 def time_search_add(dataset, empty_filter: BloomFilter):
     """For a given dataset and empty bloom filter returns a tuple containing four lists, which contain the time needed
     for each search and addition and the amount of cumulative time needed for these operations. The searching is done
@@ -256,12 +257,11 @@ def false_positive_against_filter_size(
     plt.ylabel("False positive rate")
     plt.legend()
     plt.grid(True)
-
-    plot_dir = current_dir / "false_positive_rate_plots"
-    plot_dir.mkdir(exist_ok=True)
-
-    plt.savefig(plot_dir / f"FalsePositiveRateIncreasingFilterSize_{data_name}")
+    if not os.path.exists("false_positive_rate_plots"):
+        os.mkdir("false_positive_rate_plots")
+    plt.savefig(f"false_positive_rate_plots/FalsePositiveRateIncreasingFilterSize_{data_name}")
     plt.clf()
+
 
 def false_positive_against_inserted_strings(dataset, empty_filter, samples=200, seed=0):
     """Plots the false positive rate against the amount of inserted strings when inserting into an empty Bloom filter.
@@ -307,6 +307,8 @@ def false_positive_against_inserted_strings(dataset, empty_filter, samples=200, 
         os.mkdir("false_positive_rate_plots")
     plt.savefig(f"false_positive_rate_plots/FalsePositiveRateIncreasingStrings_{data_name}")
     plt.clf()
+
+
 def false_positive_against_amount_hash(dataset, n, m, max_k, h1=sdbm, h2=MurmurHash3, seed=0):
     """Returns a plot showing how the false positive rate changes as the amount of hash functions increase.
     'dataset' denotes which bloom filter of size m we create and for which n random strings of the dataset are inserted.
