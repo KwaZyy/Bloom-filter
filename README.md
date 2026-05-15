@@ -103,5 +103,46 @@ This file tells Git which temporary files should not be tracked.
 This file explains the project structure and how the repository is organized.
 environment.yml denotes the python environment the software was created in.
 
+## Running the Project
 
+The project can be checked from the root folder of the repository.
+
+To check that the Python files compile:
+
+```powershell
+python -m compileall src examples tests
+```
+
+To run the pytest test suite:
+
+```powershell
+pytest
+```
+
+The test suite checks the main Bloom filter behaviour, the hash functions, and the expected project files.
+
+## Running Example Scripts
+
+The example scripts are stored in the `examples/` folder. They should be run from the root folder of the repository.
+
+For example:
+
+```powershell
+python examples/Correctness.py
+python examples/AddingAndSearching.py
+python examples/FalsePositiveRateIncreasingStrings.py
+python examples/FalsePositiveRateIncreasingFilterSize.py
+python examples/OptimalAmountHashFunctions.py
+```
+
+Some scripts create plots. These plots are saved in folders such as:
+
+- `examples/false_positive_rate_plots/`
+- `examples/correlation_plots/`
+- `examples/histograms/`
+- `examples/time_plots/`
+
+## Job Scripts
+
+The `examples/job_scripts/` folder contains job scripts used to run some experiments through VS Code or similar job-running workflows.
 ## Conclusion
