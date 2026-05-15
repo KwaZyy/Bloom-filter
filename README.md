@@ -144,5 +144,4 @@ Some scripts create plots. These plots are saved in folders such as:
 
 ## Job Scripts
 
-The `examples/job_scripts/` folder contains job scripts used to run some experiments through VS Code or similar job-running workflows.
-## Conclusion
+The `examples/job_scripts/` folder contains job scripts which were used via VSC (Vlaams Supercomputer Centrum) to run certain python scripts which were time intensive.
