@@ -1,5 +1,5 @@
-from src.BloomFilter import BloomFilter, KMBloomFilter,\
-    plot_time_search_add, plot_cumulative_time_per_hash, plot_time_length_string
+from src.BloomFilter import BloomFilter, KMBloomFilter
+from src.BloomFilterPlots import plot_time_search_add, plot_cumulative_time_per_hash, plot_time_length_string
 from src.HashingFunctions import lose_lose, djb2, sdbm, MurmurHash3
 
 plot_time_search_add("words.txt", KMBloomFilter(200000, sdbm, MurmurHash3, 3))
