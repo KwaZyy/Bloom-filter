@@ -84,7 +84,7 @@ This folder contains plots related to timing experiments.
 
 ### `examples/job_scripts/`
 
-This folder contains job scripts used to run some experiments.
+This folder contains job scripts used to run some experiments, and their corresponding .out files.
 
 ### `tests/`
 
