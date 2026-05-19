@@ -1,0 +1,12 @@
+SLURM_JOB_ID: 66720272
+SLURM_JOB_USER: vsc38822
+SLURM_JOB_ACCOUNT: lp_h_ds_students
+SLURM_JOB_NAME: OptimalAmountHashFunctions.slurm
+SLURM_CLUSTER_NAME: wice
+SLURM_JOB_PARTITION: batch
+SLURM_NNODES: 1
+SLURM_NODELIST: s28c11n1
+SLURM_JOB_CPUS_PER_NODE: 1
+Date: Tue May 19 02:04:48 CEST 2026
+Walltime: 00-01:00:00
+========================================================================
