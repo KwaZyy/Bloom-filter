@@ -33,6 +33,7 @@ Bloom-filter/
 │   └── HashingFunctions.py
 ├── tests/
 ├── .gitignore
+├── Bloom_filter_report.pdf
 ├── environment.yml
 └── README.md
 ```
@@ -89,6 +90,10 @@ This folder contains job scripts used to run some experiments, and their corresp
 ### `tests/`
 
 This folder is intended for test files.
+
+### `Bloom_filter_report.pdf`
+
+This file contains the final report of the project.
 
 ### `environment.yml`
 
